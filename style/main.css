@@ -65,3 +65,57 @@
 .card button:hover {
     background-color: #e5944d;
 }
+/* Recommendations-specific overrides */
+#recommendations .card {
+    padding: 10px;
+    /* same as main cards */
+}
+
+#recommendations .card img {
+    width: 100%;
+    /* let it fill the grid cell */
+    max-width: none;
+    /* remove the 200px cap */
+    margin: 0;
+    /* no forced centering */
+}
+
+#recommendations-section {
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+/* Navigation styling */
+nav {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+nav a.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding-bottom: 4px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+nav a.nav-link:hover {
+    color: #f0a868;
+    border-bottom: 2px solid #f0a868;
+}
+
+/* Active nav link */
+nav a.nav-link.active {
+    color: #f0a868;
+    font-weight: bold;
+    border-bottom: 2px solid #f0a868;
+}
+
+/* Responsive nav */
+@media (max-width: 480px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

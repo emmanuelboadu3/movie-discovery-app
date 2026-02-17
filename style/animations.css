@@ -1,9 +1,11 @@
-/* animations.css */
+/* ==========================
+   animations.css
+   ========================== */
 
-/* Fade-in for cards */
-.card {
+/* Fade-in for grids (movies, recommendations, providers) */
+.grid {
     opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
+    animation: fadeIn 0.6s ease forwards;
 }
 
 @keyframes fadeIn {
@@ -18,23 +20,150 @@
     }
 }
 
-/* Spinner */
-.spinner {
-    border: 4px solid #222;
-    border-top: 4px solid #8ab4f8;
+/* Card hover animation */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Provider logos pop-in */
+#providers img {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: popIn 0.4s ease forwards;
+}
+
+#providers img:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+#providers img:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#providers img:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes popIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Loading spinner */
+#loading {
+    border: 4px solid #ddd;
+    border-top: 4px solid #f0a868;
     border-radius: 50%;
     width: 40px;
     height: 40px;
     animation: spin 1s linear infinite;
-    margin: 2rem auto;
+    margin: 20px auto;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
     100% {
         transform: rotate(360deg);
     }
+}
+
+/* Rating stars */
+.rating {
+    margin-top: 8px;
+    font-size: 1.4rem;
+    color: #f0a868;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.rating .star {
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease, opacity 0.3s ease;
+    opacity: 0;
+    animation: fadeInStars 0.6s forwards;
+}
+
+.rating .star:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.rating .star:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.rating .star:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.rating .star:nth-child(4) {
+    animation-delay: 0.7s;
+}
+
+.rating .star:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+.rating .star:hover {
+    transform: scale(2.1);
+    color: #e5944d;
+    /* darker gold on hover */
+}
+
+/* Glow effect when clicked */
+.rating .star:active {
+    color: #ffd700;
+    /* bright gold */
+    text-shadow: 0 0 8px #ffd700, 0 0 12px #f0a868;
+    transform: scale(1.3);
+}
+
+/* Fade-in animation for stars */
+@keyframes fadeInStars {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ==========================
+   Page fade-in/fade-out for router
+   ========================== */
+
+/* Fade-out before route change */
+#page-content.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Fade-in after route change */
+#page-content.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }

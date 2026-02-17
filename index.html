@@ -7,22 +7,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="./style/main.css" />
+    <link rel="stylesheet" href="./style/animations.css" />
 </head>
 
 <body>
     <header id="app-header">
         <h1>Movie Discovery App</h1>
+        <nav>
+            <a href="#/" class="nav-link">Home</a>
+            <a href="#/watchlist" class="nav-link">Watchlist</a>
+            <a href="#/favorites" class="nav-link">Favorites</a>
+            
+
+        </nav>
     </header>
 
+
     <main id="app">
-        <!-- Movie grid container -->
-        <section id="movies" class="grid"></section>
+        <div id="page-content">
+            <!-- Movie grid container -->
+            <section id="movies" class="grid"></section>
+    
+            <!-- Details container -->
+            <section id="details"></section>
+    
+            <!-- Recommendations section -->
+            <section id="recommendations-section">
+                <h2>Recommended for You</h2>
+                <div id="recommendations" class="grid"></div>
+            </section>
+    
+            <section id="providers-section">
+                <h2>Available On</h2>
+                <div id="providers" class="grid"></div>
+            </section>
+        </div>
     </main>
+
 
     <div id="loading" class="hidden">Loading...</div>
     <div id="error" class="hidden"></div>
 
-    <script type="module" src="./scripts/components.js"></script>
     <script type="module" src="./scripts/main.js"></script>
 </body>
 

@@ -1,35 +1,23 @@
-// components.js
-// Reusable UI elements
-
+import { IMAGE_BASE_URL } from "../api/tmdb.js";
 import { toggleWatchlist, isInWatchlist } from "../modules/watchlist.js";
-import { toggleFavorite } from "../modules/favorites.js";
-import { fetchStreamingAvailability } from "../api/streaming.js";
-import { getRecommendations } from "../modules/recommendations.js";
+import { toggleFavorite, isFavorite } from "../modules/favorites.js";
+import { getRating, setRating } from "../modules/ratings.js";
 
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+// Render a grid of cards (movies, TV shows, favorites, watchlist, recommendations)
+export function renderCards(items, sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
 
-// Render a grid of cards
-export function renderCards(items) {
-    const app = document.getElementById("app");
-    app.innerHTML = "";
-
-    if (!items || items.length === 0) {
-        app.innerHTML = "<p>No results found.</p>";
-        return;
-    }
-
-    const grid = document.createElement("div");
-    grid.className = "grid";
+    section.innerHTML = ""; // clear previous content
 
     items.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-
         const title = item.title || item.name;
-        const type = item.media_type || "movie";
         const poster = item.poster_path
             ? `${IMAGE_BASE_URL}${item.poster_path}`
             : "placeholder.jpg";
+
+        const card = document.createElement("div");
+        card.className = "card";
 
         card.innerHTML = `
             <img src="${poster}" alt="${title}" />
@@ -37,20 +25,23 @@ export function renderCards(items) {
             <button class="details-btn">Details</button>
         `;
 
+        // Navigate to details route
         card.querySelector(".details-btn").addEventListener("click", () => {
+            const type = item.media_type || (item.first_air_date ? "tv" : "movie");
             window.location.hash = `#/details/${type}/${item.id}`;
         });
 
-        grid.appendChild(card);
+        section.appendChild(card);
     });
-
-    app.appendChild(grid);
 }
 
-// Render a detailed view
+// Render detailed view of a movie or show
 export async function renderDetails(item, type) {
-    const app = document.getElementById("app");
-    app.innerHTML = "";
+    const detailsSection = document.getElementById("details");
+    if (!detailsSection) return;
+
+    // Clear previous content
+    detailsSection.innerHTML = "";
 
     const title = item.title || item.name;
     const poster = item.poster_path
@@ -68,52 +59,43 @@ export async function renderDetails(item, type) {
         <p><strong>Rating:</strong> ${item.vote_average || "N/A"}</p>
 
         <div class="actions">
-            <button id="watchlist-btn">
-                ${isInWatchlist(item.id) ? "✓ In Watchlist" : "+ Watchlist"}
-            </button>
-            <button id="favorite-btn">❤ Favorite</button>
+            <button id="watchlist-btn">${isInWatchlist(item.id) ? "✓ In Watchlist" : "+ Watchlist"}</button>
+            <button id="favorite-btn">${isFavorite(item.id) ? "★ Favorited" : "☆ Favorite"}</button>
         </div>
 
-        <div id="streaming-info">Loading streaming availability...</div>
-        <h3>Recommended</h3>
-        <div id="recommendations"></div>
+        <div class="rating" id="rating-container"></div>
     `;
 
-    app.appendChild(details);
+    detailsSection.appendChild(details);
 
     // Watchlist button
-    document.getElementById("watchlist-btn").addEventListener("click", () => {
+    const watchlistBtn = document.getElementById("watchlist-btn");
+    watchlistBtn.addEventListener("click", () => {
         toggleWatchlist(item);
-        renderDetails(item, type);
+        watchlistBtn.textContent = isInWatchlist(item.id) ? "✓ In Watchlist" : "+ Watchlist";
     });
 
     // Favorite button
-    document.getElementById("favorite-btn").addEventListener("click", () => {
+    const favoriteBtn = document.getElementById("favorite-btn");
+    favoriteBtn.addEventListener("click", () => {
         toggleFavorite(item);
-        alert("Added to favorites");
+        favoriteBtn.textContent = isFavorite(item.id) ? "★ Favorited" : "☆ Favorite";
     });
 
-    // Streaming availability
-    const streaming = await fetchStreamingAvailability(title);
-    document.getElementById("streaming-info").innerHTML = `
-        <p>Netflix: ${streaming.netflix ? "✅" : "❌"}</p>
-        <p>Prime Video: ${streaming.prime ? "✅" : "❌"}</p>
-        <p>Disney+: ${streaming.disney ? "✅" : "❌"}</p>
-    `;
-
-    // Recommendations
-    const recs = await getRecommendations(item.id, type);
-    const recContainer = document.getElementById("recommendations");
-
-    recs.slice(0, 5).forEach(rec => {
-        const recDiv = document.createElement("div");
-        recDiv.className = "recommendation";
-        recDiv.textContent = rec.title || rec.name;
-
-        recDiv.addEventListener("click", () => {
-            window.location.hash = `#/details/${type}/${rec.id}`;
-        });
-
-        recContainer.appendChild(recDiv);
-    });
+    // Rating stars
+    const ratingContainer = document.getElementById("rating-container");
+    function updateStars() {
+        ratingContainer.innerHTML = "";
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement("span");
+            star.textContent = i <= getRating(item.id) ? "★" : "☆";
+            star.classList.add("star");
+            star.addEventListener("click", () => {
+                setRating(item.id, i);
+                updateStars();
+            });
+            ratingContainer.appendChild(star);
+        }
+    }
+    updateStars();
 }

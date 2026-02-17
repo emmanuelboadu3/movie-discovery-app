@@ -7,8 +7,8 @@ export function saveToStorage(key, data) {
 
 export function getFromStorage(key) {
     try {
-        return JSON.parse(localStorage.getItem(key)) || [];
+        return JSON.parse(localStorage.getItem(key)) || {};
     } catch {
-        return [];
+        return {};
     }
 }
