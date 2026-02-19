@@ -16,7 +16,7 @@ export function renderFooter() {
           <img src="assets/icons/instagram-circle.svg" alt="Instagram" width="20">
         </a>
         <a href="https://facebook.com/share/1APo2Pr2dP/" target="_blank">
-          <img src="assets/icons/facebook.svg" alt="Facebook" width="20">
+          <img src="docs/assets/icons/facebook.svg" alt="Facebook" width="20">
         </a>
         <!-- Wireframe link -->
         <a href="assets/images/wireframe.png" target="_blank">
