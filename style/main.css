@@ -1,3 +1,38 @@
+/* Header layout */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* pushes search bar to the right */
+    flex-wrap: wrap;
+    /* keeps it responsive */
+    padding: 10px 20px;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    gap: 15px;
+}
+
+/* Search bar styling */
+.search-bar {
+    margin-left: auto;
+    /* ensures it goes to the far right */
+}
+
+.search-bar input {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #cebaba;
+}
+
+
 /* Grid layout */
 .grid {
     display: grid;
@@ -6,7 +41,7 @@
     /* 4 cards per row on large screens */
 }
 
-/* Responsive */
+/* Responsive grid */
 @media (max-width: 1024px) {
     .grid {
         grid-template-columns: repeat(3, 1fr);
@@ -27,7 +62,7 @@
 
 /* Card styling */
 .card {
-    background-color: #fff;
+    background-color: #b18245;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -63,21 +98,18 @@
 }
 
 .card button:hover {
-    background-color: #e5944d;
+    background-color: #c22b2b;
 }
+
 /* Recommendations-specific overrides */
 #recommendations .card {
     padding: 10px;
-    /* same as main cards */
 }
 
 #recommendations .card img {
     width: 100%;
-    /* let it fill the grid cell */
     max-width: none;
-    /* remove the 200px cap */
     margin: 0;
-    /* no forced centering */
 }
 
 #recommendations-section {
@@ -85,6 +117,7 @@
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }
+
 /* Navigation styling */
 nav {
     display: flex;
@@ -117,5 +150,53 @@ nav a.nav-link.active {
     nav {
         flex-direction: column;
         gap: 10px;
+    }
+}
+
+/* Sticky footer setup */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* full viewport height */
+    margin: 0;
+}
+
+main {
+    flex: 1;
+    /* pushes footer down */
+}
+
+#app-footer {
+    background-color: #111;
+    color: #eee;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Social links inside footer */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    color: #eee;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #f0a868;
+}
+
+/* Responsive footer socials */
+@media (max-width: 480px) {
+    .social-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
     }
 }

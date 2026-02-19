@@ -22,11 +22,19 @@ A centralized movie and TV discovery application that helps users:
 3. Open `index.html` in your browser
 
 ## Deployment
-- GitHub Pages or AWS Elastic Beanstalk
+- GitHub Pages 
 
-## Screenshots
-(Add screenshots of homepage, search, details, watchlist, favorites)
+## Wireframe
+
+This is the initial wireframe for the Movie Discovery App:
+
+# [Wireframe]( assets/images/wireframe.png )
+
+
 
 ## Credits
 - TMDb API
 - Utelly/JustWatch API
+
+## Video Link [ https://youtu.be/oNTHBPHhv2Q ]
+## 
